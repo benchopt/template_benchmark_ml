@@ -28,7 +28,7 @@ class Solver(BaseSolver):
     requirements = ['sklearn']
 
     # Force solver to run only once if you don't want to record training steps
-    sampling_strategy = "run_one"
+    sampling_strategy = "run_once"
 
     def set_objective(self, X_train, y_train):
         # Define the information received by each solver from the objective.
