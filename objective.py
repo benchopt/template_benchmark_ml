@@ -17,7 +17,7 @@ class Objective(BaseObjective):
     name = "Template benchmark"
 
     # URL of the main repo for this benchmark.
-    url = "https://github.com/#ORG/template_benchmark"
+    url = "https://github.com/#ORG/#BENCHMARK"
 
     # List of parameters for the objective. The benchmark will consider
     # the cross product for each key in the dictionary.
@@ -30,7 +30,7 @@ class Objective(BaseObjective):
     # List of packages needed to run the benchmark.
     # They are installed with conda; to use pip, use 'pip:packagename'. To
     # install from a specific conda channel, use 'channelname:packagename'.
-    # Packages that are not necessary to the whole benchmark but only to some
+    # Packages not necessary to the whole benchmark but only to some
     # solvers or datasets should be declared in Dataset or Solver (see
     # simulated.py and python-gd.py).
     # Example syntax: requirements = ['numpy', 'pip:jax', 'pytorch:pytorch']
@@ -59,8 +59,8 @@ class Objective(BaseObjective):
     def evaluate_result(self, model):
         # The keyword arguments of this function are the keys of the
         # dictionary returned by `Solver.get_result`. This defines the
-        # benchmark's API to pass solvers' result. This is customizable for
-        # each benchmark.
+        # benchmark's API to pass the solvers' result. This can be
+        # customized for each benchmark.
         y_pred = model.predict(self.X_test)
         accuracy = accuracy_score(self.y_test, y_pred)
 
@@ -75,15 +75,14 @@ class Objective(BaseObjective):
         # with `self.evaluate_result`. This is mainly for testing purposes.
         clf = DummyClassifier()
         clf.fit(self.X_train, self.y_train)
-        clf.predict(self.X_test)
         return dict(model=clf)
 
     def get_objective(self):
         # Define the information to pass to each solver to run the benchmark.
-        # The output of this function are the keyword arguments
+        # The keys of this method's output dictionary are the keyword arguments
         # for `Solver.set_objective`. This defines the
         # benchmark's API for passing the objective to the solver.
-        # It is customizable for each benchmark.
+        # This can be customized in each benchmark.
 
         self.X_train, self.X_test, self.y_train, self.y_test = self.get_split(self.X, self.y)
 
