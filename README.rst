@@ -5,9 +5,9 @@ Template for Benchopt Benchmark repositories
 This repo should be used with the following steps:
 
 1. Hit the `Use this template` button on the top of `this page <https://github.com/benchopt/template_benchmark>`_,
-2. Use the form to create a new github repository with your benchmark name,
+2. Use the form to create a new GitHub repository with your benchmark name,
 3. Clone the newly created repository on your computer,
-4. Run ``python clean_template.py`` script that will remove instruction relative to
+4. Run ``python clean_template.py`` script that will remove instructions relative to
    the template in ``README.rst`` and update it with your repo and org name.
 5. Edit the problem description in the ``README.rst``.
 6. Update ``objective.py`` and the files in ``datasets`` and ``solvers`` to create the benchmark.
@@ -17,13 +17,8 @@ My Benchopt Benchmark
 |Build Status| |Python 3.6+|
 
 Benchopt is a package to simplify and make more transparent and
-reproducible the comparisons of optimization algorithms.
-This benchmark is dedicated to solver of **describe your problem**:
-
-
-$$\\min_{\\beta} f(X, \\beta),$$
-
-where $X$ is the matrix of data and $\\beta$ is the optimization variable.
+reproducible comparisons of ML methods on multiple datasets.
+This benchmark is dedicated to methods for **describe your problem**.
 
 Install
 --------
@@ -45,8 +40,8 @@ Apart from the problem, options can be passed to ``benchopt run``, to restrict t
 
 Use ``benchopt run -h`` for more details about these options, or visit https://benchopt.github.io/api.html.
 
-.. |Build Template| image:: https://github.com/benchopt/template_benchmark/workflows/Tests/badge.svg
-   :target: https://github.com/benchopt/template_benchmark/actions
+.. |Build Template| image:: https://github.com/benchopt/template_benchmark_ml/workflows/Tests/badge.svg
+   :target: https://github.com/benchopt/template_benchmark_ml/actions
 .. |Build Status| image:: https://github.com/#ORG/#BENCHMARK_NAME/workflows/Tests/badge.svg
    :target: https://github.com/#ORG/#BENCHMARK_NAME/actions
 .. |Python 3.6+| image:: https://img.shields.io/badge/python-3.6%2B-blue
