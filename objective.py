@@ -1,13 +1,9 @@
 from benchopt import BaseObjective, safe_import_context
 
-# Protect the import with `safe_import_context()`. This allows:
-# - skipping import to speed up autocompletion in CLI.
-# - getting requirements info when all dependencies are not installed.
-with safe_import_context() as import_ctx:
-    import numpy as np
-    from sklearn.model_selection import KFold
-    from sklearn.dummy import DummyClassifier
-    from sklearn.metrics import accuracy_score
+import numpy as np
+from sklearn.model_selection import KFold
+from sklearn.dummy import DummyClassifier
+from sklearn.metrics import accuracy_score
 
 # The benchmark objective must be named `Objective` and
 # inherit from `BaseObjective` for `benchopt` to work properly.
@@ -38,7 +34,7 @@ class Objective(BaseObjective):
 
     # Minimal version of benchopt required to run this benchmark.
     # Bump it up if the benchmark depends on a new feature of benchopt.
-    min_benchopt_version = "1.6"
+    min_benchopt_version = "1.8"
 
     def set_data(self, X, y):
         # The keyword arguments of this function are the keys of the dictionary

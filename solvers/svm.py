@@ -1,12 +1,6 @@
-from benchopt import BaseSolver, safe_import_context
+from benchopt import BaseSolver
 
-# Protect the import with `safe_import_context()`. This allows:
-# - skipping import to speed up autocompletion in CLI.
-# - getting requirements info when all dependencies are not installed.
-with safe_import_context() as import_ctx:
-
-    # import your reusable functions here
-    from sklearn.svm import SVC
+from sklearn.svm import SVC
 
 
 # The benchmark solvers must be named `Solver` and

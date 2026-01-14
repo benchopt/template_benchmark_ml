@@ -1,11 +1,6 @@
-from benchopt import BaseDataset, safe_import_context
+from benchopt import BaseDataset
 
-
-# Protect the import with `safe_import_context()`. This allows:
-# - skipping import to speed up autocompletion in CLI.
-# - getting requirements info when all dependencies are not installed.
-with safe_import_context() as import_ctx:
-    from sklearn.datasets import make_classification
+from sklearn.datasets import make_classification
 
 
 # All datasets must be named `Dataset` and inherit from `BaseDataset`
