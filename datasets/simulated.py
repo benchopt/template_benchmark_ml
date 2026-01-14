@@ -29,12 +29,16 @@ class Dataset(BaseDataset):
         # to `Objective.set_data`. This defines the benchmark's
         # API to pass data. It is customizable for each benchmark.
         #
-        # Data splitting is handled by the `Objective.get_objective` method and `Objective.cv` property
+        # Data splitting is handled by the `Objective.get_objective` method
+        # and `Objective.cv` property
 
         # Generate pseudorandom data using `sklearn` for classification.
         # Generating synthetic dataset
-        X, y = make_classification(n_samples=self.n_samples, n_features=self.n_features, n_informative=1,
-                                   n_redundant=0, n_clusters_per_class=1, random_state=self.random_state)
+        X, y = make_classification(
+            n_samples=self.n_samples, n_features=self.n_features,
+            n_informative=1, n_redundant=0, n_clusters_per_class=1,
+            random_state=self.random_state
+        )
 
         # The dictionary defines the keyword arguments for `Objective.set_data`
         return dict(X=X, y=y)

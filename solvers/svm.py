@@ -23,9 +23,6 @@ class Solver(BaseSolver):
     # so no need to add it again.
     requirements = []
 
-    # Force the solver to run only once if you don't want to record training steps
-    sampling_strategy = "run_once"
-
     def set_objective(self, X_train, y_train):
         # Define the information received by each solver from the objective.
         # The arguments of this function are the results of the
@@ -36,10 +33,14 @@ class Solver(BaseSolver):
         self.clf = SVC(kernel=self.kernel)
 
     def run(self, _):
+        """Run the solver.
+
+        Parameters
+        ----------
+        _ : ignored
+            With sampling_strategy="run_once", this parameter is unused.
+        """
         # This is the method that is called to fit the model.
-        # The input param is only defined if you change the sampling strategy
-        # to value different than "run_once".
-        # See https://benchopt.github.io/performance_curves.html
         self.clf.fit(self.X_train, self.y_train)
 
     def get_result(self):
