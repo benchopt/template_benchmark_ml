@@ -12,7 +12,7 @@ class Objective(BaseObjective):
     name = "Template benchmark"
 
     # URL of the main repo for this benchmark.
-    url = "https://github.com/#ORG/#BENCHMARK"
+    url = "https://github.com/benchopt/#BENCHMARK"
 
     # List of parameters for the objective. The benchmark will consider
     # the cross product for each key in the dictionary.
