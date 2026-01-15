@@ -1,13 +1,8 @@
-from benchopt import BaseObjective, safe_import_context
+from benchopt import BaseObjective
 
-# Protect the import with `safe_import_context()`. This allows:
-# - skipping import to speed up autocompletion in CLI.
-# - getting requirements info when all dependencies are not installed.
-with safe_import_context() as import_ctx:
-    import numpy as np
-    from sklearn.model_selection import KFold
-    from sklearn.dummy import DummyClassifier
-    from sklearn.metrics import accuracy_score
+from sklearn.model_selection import KFold
+from sklearn.dummy import DummyClassifier
+
 
 # The benchmark objective must be named `Objective` and
 # inherit from `BaseObjective` for `benchopt` to work properly.
@@ -38,7 +33,12 @@ class Objective(BaseObjective):
 
     # Minimal version of benchopt required to run this benchmark.
     # Bump it up if the benchmark depends on a new feature of benchopt.
-    min_benchopt_version = "1.6"
+    min_benchopt_version = "1.8"
+
+    # Disable performance curves - each solver runs once to completion
+    # See https://benchopt.github.io/stable/user_guide/performance_curves.html
+    # for more details.
+    sampling_strategy = "run_once"
 
     def set_data(self, X, y):
         # The keyword arguments of this function are the keys of the dictionary
@@ -49,7 +49,9 @@ class Objective(BaseObjective):
         # Specify a cross-validation splitter as the `cv` attribute.
         # This will be automatically used in `self.get_split` to split
         # the arrays provided.
-        self.cv = KFold(n_splits=5, shuffle=True, random_state=self.random_state)
+        self.cv = KFold(
+            n_splits=5, shuffle=True, random_state=self.random_state
+        )
 
         # If the cross-validation requires some metadata, it can be
         # provided in the `cv_metadata` attribute. This will be passed
@@ -61,13 +63,16 @@ class Objective(BaseObjective):
         # dictionary returned by `Solver.get_result`. This defines the
         # benchmark's API to pass the solvers' result. This can be
         # customized for each benchmark.
-        y_pred = model.predict(self.X_test)
-        accuracy = accuracy_score(self.y_test, y_pred)
+        #
+        # Here, the solver returns a trained model,
+        # with which we can call ``score`` to get the accurcay.
+        accuracy_train = model.score(self.X_train, self.y_train)
+        accuracy_test = model.score(self.X_test, self.y_test)
 
-        # This method can return many metrics in a dictionary. One of these
-        # metrics needs to be `value` for convergence detection purposes.
+        # This method can return many metrics in a dictionary.
         return dict(
-            value=accuracy,
+            accuracy_test=accuracy_test,
+            accuracy_train=accuracy_train,
         )
 
     def get_one_result(self):
@@ -84,7 +89,9 @@ class Objective(BaseObjective):
         # benchmark's API for passing the objective to the solver.
         # This can be customized in each benchmark.
 
-        self.X_train, self.X_test, self.y_train, self.y_test = self.get_split(self.X, self.y)
+        self.X_train, self.X_test, self.y_train, self.y_test = self.get_split(
+            self.X, self.y
+        )
 
         return dict(
             X_train=self.X_train,
